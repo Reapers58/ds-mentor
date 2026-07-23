@@ -1,0 +1,58 @@
+# ==========================
+# Environment Variables
+# ==========================
+.env
+.env.*
+!.env.example
+
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# ==========================
+# Node.js / React / Next.js
+# ==========================
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# ==========================
+# Logs
+# ==========================
+*.log
+
+# ==========================
+# IDE
+# ==========================
+.vscode/
+.idea/
+
+# ==========================
+# OS
+# ==========================
+Thumbs.db
+.DS_Store
+
+# Logs
+*.err
+*.log
+
+# Development output
+dev_output*.txt
+
+# TypeScript incremental build
+*.tsbuildinfo

@@ -43,49 +43,7 @@ ds-mentor/
 | Database | PostgreSQL (users, conversations, graph data) |
 | Infra | Docker Compose |
 
-## Quick Start
-
-### Prerequisites
-- Docker & Docker Compose
-- Groq API key (free: https://console.groq.com)
-
-### Setup
-
-1. **Clone and configure**
-```bash
-cd ds-mentor
-cp .env.example .env
-# Edit .env: set GROQ_API_KEY=your_key_here
-```
-
-2. **Start services**
-```bash
-docker compose up -d
-```
-
-3. **Run database migrations**
-```bash
-docker compose exec backend alembic upgrade head
-```
-
-4. **Seed mock data**
-```bash
-docker compose exec backend psql -U postgres -d dsmentor -f /app/seed_data/seed.sql
-```
-
-5. **Index sample documents**
-```bash
-curl -X POST http://localhost:8000/api/v1/admin/documents/reindex \
-  -H "Authorization: Bearer <admin_token>"
-```
-
-### Access
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
-- **Qdrant Dashboard**: http://localhost:6333/dashboard
-
-## Local Dev (Hybrid) — Recommended
+## Quick Start (Recommended — Hybrid)
 
 Run only the data stores (Postgres, Qdrant, optional Redis) in Docker and the app locally.
 The images are pulled automatically by Docker Compose — no manual downloads.
@@ -154,7 +112,54 @@ npm run dev
 > **Note:** Redis is not used by the app at runtime; the `redis` container is only
 > needed if you enable a feature that depends on it.
 
-### Demo Users (seeded, password: `password123`)
+## Alternative: Full Docker (Optional — Not Recommended)
+
+> **Not the recommended path** — the hybrid setup above is preferred. Running every
+> service in compose may require resolving image-build gaps (the backend image
+> excludes Alembic migrations and has no `psql` client for seeding). Provided for
+> reference only.
+
+### Prerequisites
+- Docker & Docker Compose
+- Groq API key (free: https://console.groq.com)
+
+### Setup
+
+1. **Clone and configure**
+```bash
+cd ds-mentor
+cp .env.example .env
+# Edit .env: set GROQ_API_KEY=your_key_here
+```
+
+2. **Start services**
+```bash
+docker compose up -d
+```
+
+3. **Run database migrations**
+```bash
+docker compose exec backend alembic upgrade head
+```
+
+4. **Seed mock data**
+```bash
+docker compose exec backend psql -U postgres -d dsmentor -f /app/seed_data/seed.sql
+```
+
+5. **Index sample documents**
+```bash
+curl -X POST http://localhost:8000/api/v1/admin/documents/reindex \
+  -H "Authorization: Bearer <admin_token>"
+```
+
+### Access
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **API Docs**: http://localhost:8000/docs
+- **Qdrant Dashboard**: http://localhost:6333/dashboard
+
+## Demo Users (seeded, password: `password123`)
 | Email | Role |
 |-------|------|
 | admin@example.com | Admin |

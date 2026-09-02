@@ -85,6 +85,75 @@ curl -X POST http://localhost:8000/api/v1/admin/documents/reindex \
 - **API Docs**: http://localhost:8000/docs
 - **Qdrant Dashboard**: http://localhost:6333/dashboard
 
+## Local Dev (Hybrid) — Recommended
+
+Run only the data stores (Postgres, Qdrant, optional Redis) in Docker and the app locally.
+The images are pulled automatically by Docker Compose — no manual downloads.
+
+### Prerequisites
+- Docker Desktop
+- Python 3.12
+- Node.js 18+ and npm
+- Groq API key (free: https://console.groq.com)
+
+### Setup
+
+1. **Clone and configure**
+```bash
+git clone <repo> && cd ds-mentor
+cp .env.example .env
+# Edit .env: set GROQ_API_KEY=your_key_here
+```
+The `.env.example` defaults point at the Docker-mapped ports (Postgres `5433`,
+Qdrant `6333`, Redis `6379`), so they work as-is for the hybrid setup.
+
+2. **Start only the data stores**
+```bash
+docker compose up -d postgres qdrant
+# If you need Redis (currently unused by the app), add: docker compose up -d redis
+```
+
+3. **Backend (local)**
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\pip install torch --index-url https://download.pytorch.org/whl/cpu
+venv\Scripts\pip install -r requirements.txt
+venv\Scripts\python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+4. **Run database migrations**
+```bash
+venv\Scripts\alembic upgrade head
+```
+
+5. **Seed mock users & projects** (via the Postgres container, which ships `psql`)
+```bash
+docker compose exec -T postgres psql -U postgres -d dsmentor < backend/seed_data/seed.sql
+```
+
+6. **Seed & index the sample SOP documents into Qdrant**
+```bash
+cd backend
+venv\Scripts\python seed_data\seed_docs.py
+```
+
+7. **Frontend (local)**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Access
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **API Docs**: http://localhost:8000/docs
+- **Qdrant Dashboard**: http://localhost:6333/dashboard
+
+> **Note:** Redis is not used by the app at runtime; the `redis` container is only
+> needed if you enable a feature that depends on it.
+
 ### Demo Users (seeded, password: `password123`)
 | Email | Role |
 |-------|------|

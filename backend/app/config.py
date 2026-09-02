@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     qdrant_collection: str = "sop_docs"
 
     groq_api_key: str = ""
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_model: str = "openai/gpt-oss-120b"
 
     embedding_model: str = "all-MiniLM-L6-v2"
 

@@ -56,31 +56,33 @@ export function ChatMessage({ role, content, sources }: ChatMessageProps) {
                   p: ({ children }) => (
                     <p className="mb-3 last:mb-0">{children}</p>
                   ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal list-outside pl-5 mb-3 space-y-1.5">
+                      {children}
+                    </ol>
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="list-disc list-outside pl-5 mb-3 space-y-1.5">
+                      {children}
+                    </ul>
+                  ),
+                  li: ({ children }) => (
+                    <li className="leading-relaxed [&>p]:my-0">{children}</li>
+                  ),
                   strong: ({ children }) => (
                     <strong className="font-semibold text-white">{children}</strong>
                   ),
                   em: ({ children }) => (
                     <em className="italic text-zinc-300">{children}</em>
                   ),
-                  ol: ({ children }) => (
-                    <ol className="list-decimal list-inside mb-3 space-y-1.5">
-                      {children}
-                    </ol>
-                  ),
-                  ul: ({ children }) => (
-                    <ul className="list-disc list-inside mb-3 space-y-1.5">
-                      {children}
-                    </ul>
-                  ),
-                  li: ({ children }) => <li className="leading-relaxed">{children}</li>,
                   h1: ({ children }) => (
-                    <h1 className="text-lg font-bold text-white mb-2 mt-4">{children}</h1>
+                    <h1 className="text-lg font-bold text-white mb-1.5 mt-3 first:mt-0">{children}</h1>
                   ),
                   h2: ({ children }) => (
-                    <h2 className="text-base font-bold text-white mb-2 mt-3">{children}</h2>
+                    <h2 className="text-base font-bold text-white mb-1.5 mt-2.5 first:mt-0">{children}</h2>
                   ),
                   h3: ({ children }) => (
-                    <h3 className="text-sm font-bold text-white mb-1 mt-3">{children}</h3>
+                    <h3 className="text-sm font-bold text-white mb-1 mt-2 first:mt-0">{children}</h3>
                   ),
                   code: ({ children, className }) => {
                     const isInline = !className;

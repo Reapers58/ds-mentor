@@ -56,3 +56,12 @@ dev_output*.txt
 
 # TypeScript incremental build
 *.tsbuildinfo
+
+# Duplicate of backend/sample_data (kept only in backend/)
+sample_data/
+
+# Local Windows dev helper (pyenv-win installer)
+install-pyenv-win.ps1
+
+# Local reference/scratch images
+*.png
